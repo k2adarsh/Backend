@@ -1,0 +1,41 @@
+$kind: http-request
+name: http://localhost:8000/api/v1/users/register
+description: ""
+url: http://localhost:8000/api/v1/users/register
+method: POST
+body:
+  type: formdata
+  content:
+    - type: text
+      key: username
+      value: jingalala
+      description: ""
+      disabled: false
+    - type: text
+      key: fullName
+      value: "Aemond "
+      description: ""
+      disabled: false
+    - type: text
+      key: email
+      value: qwerty@gmail.cowm
+      description: ""
+      disabled: false
+    - type: text
+      key: password
+      value: Akkk!2345
+      description: ""
+      disabled: false
+    - type: file
+      key: avatar
+      src:
+        - /C:/Users/adars/Downloads/1138988562006656012.jpg
+      description: ""
+      disabled: false
+    - type: file
+      key: coverImage
+      src:
+        - /C:/Users/adars/Downloads/the-battle-above-the-gods-eye-v0-xp6lgpifndpe1.webp
+      description: ""
+      disabled: true
+order: 1000
