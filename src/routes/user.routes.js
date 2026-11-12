@@ -2,8 +2,7 @@ import { Router } from "express";
 import {
     loginUser,
     registerUser,
-    logoutUser,
-    
+    logoutUser
     }
     from "../controllers/user.controllers.js";
 
