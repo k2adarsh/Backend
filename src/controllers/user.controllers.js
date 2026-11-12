@@ -155,6 +155,8 @@ const loginUser = asyncHandler( async ( req , res ) => {
     //cookie
 
     const {usernameOrEmail , password} = req.body;
+    
+    //console.log("LOGIN REQUEST RECEIVED");
 
     if(usernameOrEmail?.trim()==""){
         throw new ApiError(400, "username Or Email required");
@@ -204,9 +206,10 @@ const loginUser = asyncHandler( async ( req , res ) => {
 
 const logoutUser = asyncHandler( async (req,res) => {
     const user = req.user;
+    //console.log(user);
     user.refreshToken = undefined;
     await user.save({validateBeforeSave: false});
-
+    //console.log(user);
     /*
         await User.findByIdAndUpdate(
             req.user._id,
@@ -221,8 +224,8 @@ const logoutUser = asyncHandler( async (req,res) => {
     }
     return res
         .status(200)
-        .clearcookie("accesToken" , accessToken , options)
-        .clearcookie("refreshToken" , refreshToken , options)
+        .clearCookie("accesToken" , options)
+        .clearCookie("refreshToken" , options)
         .json(
             new ApiResponse ( 200 , {} , "User logged Out")
         )
