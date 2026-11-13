@@ -265,9 +265,38 @@ const refreshAccessToken = asyncHandler( async(req,res) => {
         )
 })
 
+const changeCurrentPassword = asyncHandler( async(req,res) => {
+    const { oldPassword , newPassword , confirmPassword } = req.body;
+    const user = await User.findById(req.user?._id)
+    if(newPassword != confirmPassword){
+        throw new ApiError( 400 , "New password and confirm password do not match")
+    }
+    if (typeof newPassword !== "string" || !newPassword.trim()) {
+        throw new ApiError(400, "New Password field is empty");
+    }
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+    if (!passwordRegex.test(newPassword)) {
+        throw new ApiError(
+            400,
+            "New Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character"
+        );
+    }
+    const verify = await user.comparePassword(oldPassword)
+    if(!verify){
+        throw new ApiError(400 , "Incorrect Old Password")
+    }
+    user.password=newPassword
+    await user.save({ validateBeforeSave: false })
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Password changed successfully"))
+})
+
 export {
     registerUser,
     loginUser,
     logoutUser,
-    refreshAccessToken
+    refreshAccessToken,
+    changeCurrentPassword
 };
