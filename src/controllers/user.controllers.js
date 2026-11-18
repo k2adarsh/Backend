@@ -385,7 +385,14 @@ const updateUserCoverImage = asyncHandler(async (req,res) => {
         .json(new ApiResponse(200, user, "Cover image updated"));
 })
 
+const getUserChannelProfile = asyncHandler(async(req,res) => {
+    const { username } = req.prams
+    if( !username?.trim() ){
+        throw new ApiError(400,"username is missing ")
+    }
 
+    
+})
 
 export {
     registerUser,
